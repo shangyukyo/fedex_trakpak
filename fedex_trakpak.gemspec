@@ -2,9 +2,14 @@
 $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
-  s.name        = 'fedex'  
+  s.name        = 'fedex_trakpak'  
+  s.version     = '1.0.0'
   s.platform    = Gem::Platform::RUBY
-
+  s.authors     = ['zhang']
+  s.email       = ['sdzc1014@163.com']
+  s.homepage    = 'https://github.com/shangyukyo/fedex_trakpak.git'
+  s.summary     = %q{Fedex Trakpak Web Services}
+  s.description = ''
 
   s.rubyforge_project = 'fedex_trakpak'
 

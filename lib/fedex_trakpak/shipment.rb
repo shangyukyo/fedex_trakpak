@@ -1,5 +1,7 @@
 require 'fedex_trakpak/credentials'
 require 'fedex_trakpak/request/label'
+require 'fedex_trakpak/request/delete'
+require 'fedex_trakpak/request/track'
 
 module FedexTrakpak
   class Shipment
@@ -13,7 +15,7 @@ module FedexTrakpak
     end
 
     def track(options = {})
-      Request::TrackingInformation.new(@credentials, options).process_request
+      Request::Track.new(@credentials, options).process_request
     end
 
     # @param [Hash] package_id, A string with the tracking number to delete

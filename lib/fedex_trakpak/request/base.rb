@@ -65,16 +65,16 @@ module FedexTrakpak
 
       def add_consignee(xml)
         xml.Consignee do 
-          xml.ContactName @shipper[:name]
-          xml.Company @shipper[:company]
-          xml.Address1 @shipper[:address_1]
-          xml.Address2 @shipper[:address_2]
-          xml.City @shipper[:city]
-          xml.Country @shipper[:country_code]
-          xml.Zip @shipper[:postal_code]
-          xml.CountryCode @shipper[:country_code]
-          xml.Phone @shipper[:phone_number]
-          xml.Email @shipper[:email]
+          xml.ContactName @recipient[:name]
+          xml.Company @recipient[:company]
+          xml.Address1 @recipient[:address_1]
+          xml.Address2 @recipient[:address_2]
+          xml.City @recipient[:city]
+          xml.Country @recipient[:country_code]
+          xml.Zip @recipient[:postal_code]
+          xml.CountryCode @recipient[:country_code]
+          xml.Phone @recipient[:phone_number]
+          xml.Email @recipient[:email]
           xml.Vat ''
         end
       end
@@ -87,8 +87,11 @@ module FedexTrakpak
         xml.Pieces 1
       end
 
-      def add_dimension(xml)
-        puts @package.inspect
+      def add_terms(xml)
+        xml.Terms @package[:terms]
+      end
+
+      def add_dimension(xml)        
         xml.Weight @package[:weight]
         xml.WeightUnit @package[:weight_unit]
         xml.Length @package[:length]
@@ -97,9 +100,40 @@ module FedexTrakpak
         xml.DimUnit 'in'
         xml.DescriptionOfGoods @package[:description_of_goods]
         xml.Value @package[:shipment_value]
-        xml.Currency @package[:shipment_currency]
-        xml.Terms @package[:terms]
+        xml.Currency @package[:shipment_currency]        
       end
+
+      def add_items(xml)
+        @package[:items].each do |item|         
+          xml.Item do 
+            xml.Description item[:description]
+            xml.SkuCode item[:sku]
+            xml.HsCode item[:hs_code]
+            xml.CountryOfOrigin item[:origin_country]
+            xml.PurchaseUrl item[:purchase_url]
+            xml.Quantity item[:quantity]
+            xml.Value item[:price]
+          end
+        end
+      end
+
+      # Parse response, convert keys to underscore symbols
+      def parse_response(response)
+        response = sanitize_response_keys(response.parsed_response)
+      end
+
+      # Recursively sanitizes the response object by cleaning up any hash keys.
+      def sanitize_response_keys(response)
+        if response.is_a?(Hash)
+          response.inject({}) { |result, (key, value)| result[underscorize(key).to_sym] = sanitize_response_keys(value); result }
+        elsif response.is_a?(Array)
+          response.collect { |result| sanitize_response_keys(result) }
+        else
+          response
+        end
+      end
+
+      
     end
   end
 end

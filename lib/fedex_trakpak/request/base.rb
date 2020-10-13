@@ -15,7 +15,7 @@ module FedexTrakpak
       # Fedex Production URL
       PRODUCTION_URL = "https://trakpak.co.uk/API/?version=3.0"
 
-      SERVICE_TYPES = %w(CBEC CBECL)
+      SERVICE_TYPES = %w(CBEC)
 
 
       def process_request

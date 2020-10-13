@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = 'fedex_trakpak'  
-  s.version     = '1.0.1'
+  s.version     = '1.0.2'
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['zhang']
   s.email       = ['sdzc1014@163.com']
@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'httparty',            '>= 0.8.3'
   s.add_dependency 'nokogiri',            '>= 1.5.6'
+  s.add_dependency 'roo',                 '>= 2.8.0'
 
   s.add_development_dependency "rspec",   '~> 3.0.0'
   s.add_development_dependency 'vcr',     '~> 2.0.0'

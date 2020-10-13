@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = 'fedex_trakpak'  
-  s.version     = '1.0.2'
+  s.version     = '1.0.3'
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['zhang']
   s.email       = ['sdzc1014@163.com']

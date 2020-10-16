@@ -15,6 +15,7 @@ module FedexTrakpak
       def process_request    
         api_response = self.class.post(api_url, :body => build_xml)                
         response = parse_response(api_response)              
+
         if success?(response)
           success_response(api_response, response)
         else
@@ -39,7 +40,7 @@ module FedexTrakpak
 
       # Successful request
       def success?(response)
-        response[:cancel_shipment_response][:error] == "0"
+        response[:cancel_shipment_response][:error_level] == "0"
       end
 
       def success_response(api_response, response)

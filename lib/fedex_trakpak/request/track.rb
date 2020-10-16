@@ -14,6 +14,7 @@ module FedexTrakpak
 
       def process_request    
         api_response = self.class.post(api_url, :body => build_xml)                
+        puts api_response
         response = parse_response(api_response)              
         puts response.inspect
         if success?(response)
@@ -40,11 +41,11 @@ module FedexTrakpak
 
       # Successful request
       def success?(response)
-        response[:cancel_shipment_response][:error] == "0"
+        response[:track_shipment_response][:error_level] == "0"
       end
 
       def success_response(api_response, response)        
-        response[:track_shipment_response][:shipment][:events]
+        response[:track_shipment_response][:shipment][:events] || response[:track_shipment_response][:shipment][:event]
       end          
 
       def failure_response(api_response, response)

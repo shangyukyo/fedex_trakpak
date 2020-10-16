@@ -13,6 +13,7 @@ module FedexTrakpak
       end
 
       def process_request        
+        puts build_xml
         api_response = self.class.post api_url, :body => build_xml        
         response = parse_response(api_response)
 
